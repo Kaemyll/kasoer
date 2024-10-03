@@ -91,7 +91,10 @@ export default {
       const carte4 = this.tirerCarteDifferente(cartesUtilisees)
       const adjectif = this.tirerElement(carte4["4adjectifs"]);
 
-      this.phrase = `Le Sujet : ${mot1} - L'Action : ${verbe} - La Cible : ${mot2} ${adjectif}`;
+      const carte5 = this.tirerCarteDifferente(cartesUtilisees);
+      const lieux = this.tirerElement(carte5["2lieux"]);
+
+      this.phrase = `Le Sujet : ${mot1} - L'Action : ${verbe} - La Cible : ${mot2} ${adjectif} - Le Lieu : ${lieux}`;
     },
     tirerMeteo() {
       const carte = this.tirerCarte();
@@ -112,18 +115,52 @@ export default {
       this.symbole = this.tirerElement(carte["Symbole"]);
     },
     genererPNJ() {
-      const carte = this.tirerCarte();
-      const adjectif = this.tirerElement(carte["4adjectifs"]);
-      const concept = this.tirerElement(carte["Concept"]);
-      const sentiment = this.tirerElement(carte["Sentiment"]);
-      const disposition = this.tirerElement(carte["Disposition"]);
-      const apparence = this.tirerElement(carte["2apparences"]);
-      const motivation = this.tirerElement(carte["Motivation"]);
-      const trait1 = this.tirerElement(carte["3traits"]);
-      const trait2 = this.tirerElement(carte["3traits"]);
-      const secret = this.tirerElement(carte["Secret"]);
-      const relation = this.tirerElement(carte["Relation"]);
-      const etoiles = this.traduireEtoiles(carte["Etoiles/5"]);
+      // Crée une liste pour stocker les index des cartes déjà tirées
+      const cartesUtilisees = [];
+
+      const carte1 = this.tirerCarte();
+      const concept = this.tirerElement(carte1["Concept"]);
+      cartesUtilisees.push(carte1.Index);
+
+      const carte2 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte2.Index);
+      const etoiles = this.traduireEtoiles(carte2["Etoiles/5"]);
+
+      const carte3 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte3.Index);
+      const adjectif = this.tirerElement(carte3["4adjectifs"]);
+
+      const carte4 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte4.Index);
+      const sentiment = this.tirerElement(carte4["Sentiment"]);
+
+      const carte5 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte5.Index);
+      const disposition = this.tirerElement(carte5["Disposition"]);
+
+      const carte6 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte6.Index);
+      const apparence = this.tirerElement(carte6["2apparences"]);
+
+      const carte7 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte7.Index);
+      const motivation = this.tirerElement(carte7["Motivation"]);
+
+      const carte8 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte8.Index);
+      const trait1 = this.tirerElement(carte8["3traits"]);
+
+      const carte9 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte9.Index);
+      const trait2 = this.tirerElement(carte9["3traits"]);
+
+      const carte10 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte10.Index);
+      const secret = this.tirerElement(carte10["Secret"]);
+
+      const carte11 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte11.Index);
+      const relation = this.tirerElement(carte11["Relation"]);
 
       // Construire la phrase pour le PNJ
       this.pnj = `Un(e) ${concept} ${adjectif} de ${etoiles} puissance - ${sentiment} / ${disposition} - En apparence : ${apparence} - Sa motivation : ${motivation} - ${trait1} / ${trait2} - Son secret : ${secret} - Ses relations : ${relation}`;
