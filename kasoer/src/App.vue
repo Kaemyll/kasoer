@@ -5,49 +5,137 @@
         <q-toolbar-title>
           KaSoeR, l'oracle de jdr solo
         </q-toolbar-title>
+
+        <q-tabs class="horloge">
+          <q-tab id="horloge">{{ horloge }}</q-tab>
+          <q-tab id="temps-ecoule">{{ tempsEcoule }}</q-tab>
+        </q-tabs>
       </q-toolbar>
     </q-header>
 
     <q-page-container>
-      <q-page class="q-pa-md">
-        <q-btn @click="genererPhrase" label="Générer une situation" color="primary" />
-        <div v-if="phrase" class="q-mt-md">
-          <q-card>
-            <q-card-section class="text-h6">
-              {{ phrase }}
-            </q-card-section>
-          </q-card>
+      <q-page class="q-ma-md">
+
+        <div class="row q-my-md">
+          <q-btn @click="genererOmen" label="Générer un omen" color="secondary" class="q-mx-md q-mt-md col"/>
+          <q-btn @click="genererDirection" label="Générer une direction" color="accent" class="q-mr-md q-mt-md col"/>
+          <q-btn @click="tirerMeteo" label="Tirer une météo" color="info" class="q-mr-md q-mt-md col"/>
+          <q-btn @click="tirerObjet" label="Tirer un objet" color="purple" class="q-mr-md q-mt-md col"/>
+        </div>
+        <div class="row q-my-md">
+          <div v-if="omen" class="q-mx-md q-mt-md col">
+            <q-card>
+              <q-card-section class="text-center">
+                Réponse à la question ouverte --> {{ omen }}
+              </q-card-section>
+            </q-card>
+          </div>
+          <div v-if="direction" class="q-mr-md q-mt-md col">
+            <q-card>
+              <q-card-section class="text-center">
+                Direction : {{ direction }}
+              </q-card-section>
+            </q-card>
+          </div>
+          <div v-if="meteo" class="q-mr-md q-mt-md col">
+            <q-card>
+              <q-card-section class="text-center">
+                Météo : {{ meteo }}
+              </q-card-section>
+            </q-card>
+          </div>
+          <div v-if="objet" class="q-mr-md q-mt-md col">
+            <q-card>
+              <q-card-section class="text-center">
+                Objet : un(e) {{ objet }} {{ adjectifObjet }}
+              </q-card-section>
+            </q-card>
+          </div>
         </div>
 
-        <q-btn @click="tirerMeteo" label="Tirer une météo" color="secondary" class="q-mt-md" />
-        <div v-if="meteo" class="q-mt-md">
-          <q-card>
-            <q-card-section class="text-h6">
-              Météo : {{ meteo }}
-            </q-card-section>
-          </q-card>
+        <q-separator color="indigo-10" spaced></q-separator>
+        <div class="row q-my-md">
+          <q-btn @click="tirerLieu" label="Tirer un lieu" color="teal" class="q-mx-md q-mt-md col"/>
+          <q-btn @click="tirerSymbole" label="Tirer un symbole" color="orange" class="q-mr-md q-mt-md col"/>
+          <q-btn label="Générer une date" class="q-mx-md q-mt-md col"/>
+          <q-btn label="Générer une origine culturelle" class="q-mx-md q-mt-md col"/>
+        </div>
+        <div class="row q-my-md">
+          <div v-if="lieu" class="q-mx-md q-mt-md col">
+            <q-card>
+              <q-card-section class="text-center">
+                Lieu : un(e) {{ lieu }} {{ adjectifLieu }}
+              </q-card-section>
+            </q-card>
+          </div>
+          <div v-if="symbole" class="q-mr-md q-mt-md col">
+            <q-card>
+              <q-card-section class="text-center">
+                Symbole : {{ symbole }}
+              </q-card-section>
+            </q-card>
+          </div>
+          <div class="q-mx-md q-mt-md col">
+            <q-card>
+              <q-card-section class="">Résultat du calendrier</q-card-section>
+            </q-card>
+          </div>
+          <div class="q-mx-md q-mt-md col">
+            <q-card>
+              <q-card-section class="">Résultat de l'origine</q-card-section>
+            </q-card>
+          </div>
         </div>
 
-        <div class="q-mt-md">
-          <q-btn @click="tirerLieu" label="Tirer un lieu" color="teal" />
-          <q-btn @click="tirerObjet" label="Tirer un objet" color="purple" />
-          <q-btn @click="tirerSymbole" label="Tirer un symbole" color="orange" />
+        <q-separator color="indigo-10" spaced></q-separator>
+        <div class="row q-my-md">
+          <q-btn @click="genererPhrase" label="Générer une situation" color="primary" class="q-mx-md q-mt-md col"/>
+          <q-btn @click="genererPNJ" label="Générer un PNJ" color="accent" class="q-mx-md q-mt-md col"/>
+        </div>
+        <div class="row q-my-md">
+          <div v-if="phrase" class="q-mx-md q-mt-md col">
+            <q-card>
+              <q-card-section class="text-h6">
+                {{ phrase }}
+              </q-card-section>
+            </q-card>
+          </div>
+          <div v-if="pnj" class="q-mx-md q-mt-md col">
+            <q-card>
+              <q-card-section class="text-h6" v-html="pnj">
+              </q-card-section>
+            </q-card>
+          </div>
         </div>
 
-        <div v-if="lieu || objet || symbole" class="q-mt-md">
-          <q-card>
-            <q-card-section class="text-h6">
-              Lieu : un(e) {{ lieu }} {{ adjectifLieu }} | Objet : un(e) {{ objet }} {{ adjectifObjet }} | Symbole : {{ symbole }}            </q-card-section>
-          </q-card>
+        <q-separator color="indigo-10" spaced></q-separator>
+        <div class="row q-my-md">
+          <q-btn label="Générer une opposition" class="q-mx-md q-mt-md col"/>
+          <q-btn label="Générer une auberge" @click="genererNomAuberge" color="primary" class="q-mx-md q-mt-md col" />
+          <q-btn label="Générer une cité/bourgade" class="q-mx-md q-mt-md col"/>
+          <q-btn label="Générer un livre" class="q-mx-md q-mt-md col"/>
         </div>
-
-        <q-btn @click="genererPNJ" label="Générer un PNJ" color="accent" class="q-mt-md" />
-        <div v-if="pnj" class="q-mt-md">
-          <q-card>
-            <q-card-section class="text-h6">
-              PNJ : {{ pnj }}
-            </q-card-section>
-          </q-card>
+        <div class="row q-my-md">
+          <div class="q-mx-md q-mt-md col">
+            <q-card>
+              <q-card-section class="">Résultat de l'opposition</q-card-section>
+            </q-card>
+          </div>
+          <div class="q-mx-md q-mt-md col">
+            <q-card>
+              <q-card-section class="">{{ nomAuberge }}</q-card-section>
+            </q-card>
+          </div>
+          <div class="q-mx-md q-mt-md col">
+            <q-card>
+              <q-card-section class="">Résultat de la cité/bourgade</q-card-section>
+            </q-card>
+          </div>
+          <div class="q-mx-md q-mt-md col">
+            <q-card>
+              <q-card-section class="">Résultat du livre</q-card-section>
+            </q-card>
+          </div>
         </div>
       </q-page>
     </q-page-container>
@@ -56,6 +144,7 @@
 
 <script>
 import cartes from './assets/oracle.json'; // Assurez-vous que le chemin est correct
+import auberges from './assets/auberge.json';
 
 export default {
   data() {
@@ -68,9 +157,92 @@ export default {
       symbole: '',
       adjectifLieu: '',
       adjectifObjet: '',
+      omen: '',
+      direction: '',
+      horloge: '',
+      tempsEcoule: '00:00:00',
+      tempsDepart: new Date(),
+      nomAuberge: '',
     };
   },
+  mounted() {
+    // Initialiser la mise à jour de l'horloge et du temps écoulé
+    setInterval(() => {
+      this.miseAJourHeure();
+      this.miseAJourTempsEcoule();
+    }, 1000);
+
+    // Autres initialisations si besoin
+  },
   methods: {
+    // Méthode pour mettre à jour l'horloge en temps réel
+    miseAJourHeure() {
+      const now = new Date();
+      const heures = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const secondes = String(now.getSeconds()).padStart(2, '0');
+      this.horloge = `${heures}:${minutes}:${secondes}`;
+    },
+
+    // Méthode pour mettre à jour le temps écoulé en temps réel
+    miseAJourTempsEcoule() {
+      const now = new Date();
+      const ecoule = Math.floor((now - this.tempsDepart) / 1000);
+
+      const heures = String(Math.floor(ecoule / 3600)).padStart(2, '0');
+      const minutes = String(Math.floor((ecoule % 3600) / 60)).padStart(2, '0');
+      const secondes = String(ecoule % 60).padStart(2, '0');
+      this.tempsEcoule = `Temps écoulé : ${heures}:${minutes}:${secondes}`;
+    },
+    tirerCarte() {
+      const index = Math.floor(Math.random() * cartes.length);
+      return cartes[index];
+    },
+    tirerAuberge() {
+      const index = Math.floor(Math.random() * auberges.length);
+      return auberges[index];
+    },
+    // Fonction pour tirer un nom d'auberge avec une structure
+    genererNomAuberge() {
+      const structure = this.tirerElement([
+        "Le/La {nom1} {adjectif}",
+        "Le/La {nom1} et le/la {nom2}",
+        "Le/La {nom1} de/du/de la {nom2}",
+        "Chez le/la {nom1} {adjectif}",
+        "L'Auberge de/du/de la {nom1}"
+      ]);
+      const nom1 = this.tirerElement(aubergeData.noms);
+      const nom2 = this.tirerElement(aubergeData.noms);
+      const adjectif = this.tirerElement(aubergeData.adjectifs);
+      const connecteur = this.tirerElement(aubergeData.connecteurs);
+
+      // Remplacement des valeurs dans la structure choisie
+      this.nomAuberge = structure
+          .replace("{nom1}", nom1)
+          .replace("{nom2}", nom2)
+          .replace("{adjectif}", adjectif)
+          .replace("le/la", connecteur);
+    },
+    tirerCarteDifferente(indexesExclus) {
+      let carte;
+      do {
+        carte = this.tirerCarte();
+      } while (indexesExclus.includes(carte.Index));
+      return carte;
+    },
+    tirerElement(chaine) {
+      const elements = chaine.split(", ");
+      const index = Math.floor(Math.random() * elements.length);
+      return elements[index];
+    },
+    genererOmen() {
+      const carte = this.tirerCarte();
+      this.omen = this.tirerElement(carte["Omen"]);
+    },
+    genererDirection() {
+      const carte = this.tirerCarte();
+      this.direction = this.tirerElement(carte["Direction"]);
+    },
     genererPhrase() {
       // liste stockant les index déjà utilisés
       const cartesUtilisees = [];
@@ -163,40 +335,25 @@ export default {
       const relation = this.tirerElement(carte11["Relation"]);
 
       // Construire la phrase pour le PNJ
-      this.pnj = `Un(e) ${concept} ${adjectif} de ${etoiles} puissance - ${sentiment} / ${disposition} - En apparence : ${apparence} - Sa motivation : ${motivation} - ${trait1} / ${trait2} - Son secret : ${secret} - Ses relations : ${relation}`;
+      this.pnj = `Un(e) ${concept} ${adjectif}, ${etoiles} que le PJ <br> Humeur : ${sentiment} - Disposition : ${disposition} <br> Caractère : ${trait1} et ${trait2} <br> Particularité physique / manie : ${apparence} <br> Sa motivation : ${motivation} <br> Son secret : ${secret} <br> Ses relations : ${relation}`;
     },
     traduireEtoiles(valeur) {
       switch (valeur) {
         case '1':
-          return 'faible';
+          return 'vraiment plus faible';
         case '2':
-          return 'commune';
+          return 'plus faible';
         case '3':
-          return 'forte';
+          return 'aussi fort';
         case '4':
-          return 'héroïque';
+          return 'plus fort';
         case '5':
-          return 'légendaire';
+          return 'beaucoup plus fort';
         default:
           return 'inconnue';
       }
     },
-    tirerCarte() {
-      const index = Math.floor(Math.random() * cartes.length);
-      return cartes[index];
-    },
-    tirerCarteDifferente(indexesExclus) {
-      let carte;
-      do {
-        carte = this.tirerCarte();
-      } while (indexesExclus.includes(carte.Index));
-      return carte;
-    },
-    tirerElement(chaine) {
-      const elements = chaine.split(", ");
-      const index = Math.floor(Math.random() * elements.length);
-      return elements[index];
-    },
+
   },
 };
 </script>
