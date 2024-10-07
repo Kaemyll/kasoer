@@ -16,6 +16,7 @@
     <q-page-container>
       <q-page class="q-ma-md">
 
+<!--        Affichage Omen / Direction / Météo / Objet-->
         <div class="row q-my-md">
           <q-btn @click="genererOmen" label="Générer un omen" color="secondary" class="q-mx-md q-mt-md col"/>
           <q-btn @click="genererDirection" label="Générer une direction" color="accent" class="q-mr-md q-mt-md col"/>
@@ -53,12 +54,13 @@
           </div>
         </div>
 
+<!--        Affichage Lieu / Symbole / Date / Origine culturelle-->
         <q-separator color="indigo-10" spaced></q-separator>
         <div class="row q-my-md">
           <q-btn @click="tirerLieu" label="Tirer un lieu" color="teal" class="q-mx-md q-mt-md col"/>
           <q-btn @click="tirerSymbole" label="Tirer un symbole" color="orange" class="q-mr-md q-mt-md col"/>
           <q-btn label="Générer une date" class="q-mx-md q-mt-md col"/>
-          <q-btn label="Générer une origine culturelle" class="q-mx-md q-mt-md col"/>
+          <q-btn @click="genererOrigineCulturelle" label="Générer une origine culturelle" color="purple-2" class="q-mx-md q-mt-md col"/>
         </div>
         <div class="row q-my-md">
           <div v-if="lieu" class="q-mx-md q-mt-md col">
@@ -71,7 +73,7 @@
           <div v-if="symbole" class="q-mr-md q-mt-md col">
             <q-card>
               <q-card-section class="text-center">
-                Symbole : {{ symbole }}
+                {{ symbole }}
               </q-card-section>
             </q-card>
           </div>
@@ -80,13 +82,14 @@
               <q-card-section class="">Résultat du calendrier</q-card-section>
             </q-card>
           </div>
-          <div class="q-mx-md q-mt-md col">
+          <div v-if="origineCulturelle" class="q-mx-md q-mt-md col">
             <q-card>
-              <q-card-section class="">Résultat de l'origine</q-card-section>
+              <q-card-section class="text-center"> {{ origineCulturelle }}</q-card-section>
             </q-card>
           </div>
         </div>
 
+<!--        Affichage génération d'une situation et d'un PNJ-->
         <q-separator color="indigo-10" spaced></q-separator>
         <div class="row q-my-md">
           <q-btn @click="genererPhrase" label="Générer une situation" color="primary" class="q-mx-md q-mt-md col"/>
@@ -108,17 +111,18 @@
           </div>
         </div>
 
+<!--        Affichage Opposition / Auberge / Cité / Livre-->
         <q-separator color="indigo-10" spaced></q-separator>
-        <div class="row q-my-md">
-          <q-btn label="Générer une opposition" class="q-mx-md q-mt-md col"/>
-          <q-btn label="Générer une auberge" @click="genererNomAuberge" color="primary" class="q-mx-md q-mt-md col" />
-          <q-btn label="Générer une cité/bourgade" class="q-mx-md q-mt-md col"/>
-          <q-btn label="Générer un livre" class="q-mx-md q-mt-md col"/>
+        <div class="row q-my-md q-gutter-xs">
+          <q-btn label="Générer une opposition" @click="genererOpposant" color="deep-orange-5" class="q-mx-md q-mt-md col"/>
+          <q-btn label="Générer une auberge" @click="genererNomAuberge" color="primary" class="q-mx-md q-mt-md col"/>
+          <q-btn label="Générer une cité/bourgade" @click="genererBourg" color="pink-6" class="q-mx-md q-mt-md col"/>
+          <q-btn label="Générer un livre" @click="genererLivre" color="lime-4" class="q-mx-md q-mt-md col"/>
         </div>
         <div class="row q-my-md">
           <div class="q-mx-md q-mt-md col">
             <q-card>
-              <q-card-section class="">Résultat de l'opposition</q-card-section>
+              <q-card-section class="">{{ opposant }}</q-card-section>
             </q-card>
           </div>
           <div class="q-mx-md q-mt-md col">
@@ -128,23 +132,29 @@
           </div>
           <div class="q-mx-md q-mt-md col">
             <q-card>
-              <q-card-section class="">Résultat de la cité/bourgade</q-card-section>
+              <q-card-section class=""> {{ nomBourg }} </q-card-section>
             </q-card>
           </div>
           <div class="q-mx-md q-mt-md col">
             <q-card>
-              <q-card-section class="">Résultat du livre</q-card-section>
+              <q-card-section class=""> {{ titreLivre }} </q-card-section>
             </q-card>
           </div>
         </div>
+
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import cartes from './assets/oracle.json'; // Assurez-vous que le chemin est correct
+import cartes from './assets/oracle.json';
 import auberges from './assets/auberge.json';
+import structures from './assets/structure.json';
+import origines from './assets/origine.json';
+import bourgs from './assets/noms_villes.json';
+import livres from './assets/biblio.json';
+import oppositions from './assets/opposition.json';
 
 export default {
   data() {
@@ -163,6 +173,10 @@ export default {
       tempsEcoule: '00:00:00',
       tempsDepart: new Date(),
       nomAuberge: '',
+      origineCulturelle: '',
+      nomBourg: '',
+      titreLivre: '',
+      opposant: ''
     };
   },
   mounted() {
@@ -172,7 +186,6 @@ export default {
       this.miseAJourTempsEcoule();
     }, 1000);
 
-    // Autres initialisations si besoin
   },
   methods: {
     // Méthode pour mettre à jour l'horloge en temps réel
@@ -194,35 +207,14 @@ export default {
       const secondes = String(ecoule % 60).padStart(2, '0');
       this.tempsEcoule = `Temps écoulé : ${heures}:${minutes}:${secondes}`;
     },
+
+    // Méthode pour tirer une carte de l'oracle
     tirerCarte() {
       const index = Math.floor(Math.random() * cartes.length);
       return cartes[index];
     },
-    tirerAuberge() {
-      const index = Math.floor(Math.random() * auberges.length);
-      return auberges[index];
-    },
-    // Fonction pour tirer un nom d'auberge avec une structure
-    genererNomAuberge() {
-      const structure = this.tirerElement([
-        "Le/La {nom1} {adjectif}",
-        "Le/La {nom1} et le/la {nom2}",
-        "Le/La {nom1} de/du/de la {nom2}",
-        "Chez le/la {nom1} {adjectif}",
-        "L'Auberge de/du/de la {nom1}"
-      ]);
-      const nom1 = this.tirerElement(aubergeData.noms);
-      const nom2 = this.tirerElement(aubergeData.noms);
-      const adjectif = this.tirerElement(aubergeData.adjectifs);
-      const connecteur = this.tirerElement(aubergeData.connecteurs);
 
-      // Remplacement des valeurs dans la structure choisie
-      this.nomAuberge = structure
-          .replace("{nom1}", nom1)
-          .replace("{nom2}", nom2)
-          .replace("{adjectif}", adjectif)
-          .replace("le/la", connecteur);
-    },
+    // Méthode pour tirer une carte forcément différentes des précédentes
     tirerCarteDifferente(indexesExclus) {
       let carte;
       do {
@@ -230,19 +222,90 @@ export default {
       } while (indexesExclus.includes(carte.Index));
       return carte;
     },
+
+    // Méthode pour tirer un élément d'une liste
     tirerElement(chaine) {
       const elements = chaine.split(", ");
       const index = Math.floor(Math.random() * elements.length);
       return elements[index];
     },
+
+    // Méthode pour tirer un nom d'auberge avec une structure
+    genererNomAuberge() {
+      // Accéder à la structure de la première entrée
+      const selectedStructure = this.tirerElement(structures[0].choix.join(", "));
+      console.log('Structure pour Auberge --> ', selectedStructure);
+
+      // Générer des éléments pour remplir la structure
+      const nom1 = this.tirerElement(auberges.noms.join(", "));
+      console.log('nom1 --> ', nom1);
+      const nom2 = this.tirerElement(auberges.noms.join(", "));
+      console.log('nom2 --> ', nom2);
+      const adjectif = this.tirerElement(auberges.adjectifs.join(", "));
+      console.log('adjectif --> ', adjectif);
+
+      // Remplacement des placeholders dans la structure choisie
+      this.nomAuberge = selectedStructure
+          .replace("{nom}", nom1)  // Remplace {nom} par le nom généré
+          .replace("{nom}", nom2)  // Deuxième remplacement pour la même clé si nécessaire
+          .replace("{adjectif}", adjectif);  // Remplace {adjectif} par l'adjectif généré
+    },
+
+    // Méthode pour déterminer une origine culturelle
+    genererOrigineCulturelle() {
+      // Récupérer les clés (centriste, septentrional, etc.)
+      const cles = Object.keys(origines[0]);
+
+      // Choisir une clé aléatoirement
+      const cleChoisie = this.tirerElement(cles.join(", "));
+
+      // Récupérer la liste des valeurs associées à cette clé
+      const valeurs = origines[0][cleChoisie].join(", ");
+
+      // Choisir une valeur aléatoire parmi celles de la clé choisie
+      const valeurChoisie = this.tirerElement(valeurs);
+
+      // Construire l'origine culturelle sous la forme "{clé} {valeur}"
+      this.origineCulturelle = `${cleChoisie} ${valeurChoisie}`;
+    },
+
+    // Méthode pour générer le nom d'une cité/bourg avec une structure
+    genererBourg() {
+      // Sélection d'une structure de cité aléatoire
+      const structureVille = this.tirerElement(bourgs.structures.join(", "));
+      console.log ('structureVille -> ', structureVille);
+
+      // Sélectionner des éléments (nom, adjectif, etc.) selon la structure choisie
+      let nom1 = this.tirerElement(bourgs.noms.join(", "));
+      let nom2 = this.tirerElement(bourgs.noms.join(", "));
+      let adjectif = this.tirerElement(bourgs.adjectifs.join(", "));
+      let connecteur = this.tirerElement(bourgs.connecteurs.join(", "));
+
+      // Remplacer les variables dans la structure
+      const nomFinal = structureVille
+          .replace(/\{nom\}/g, (match, offset) => offset === 0 ? nom1 : nom2)
+          .replace('{adjectif}', adjectif)
+          .replace('{connecteur}', connecteur);
+
+      console.log('Nom final généré -> ', nomFinal);
+
+      // Affecter le résultat à la variable
+      this.nomBourg = nomFinal;
+    },
+
+    // Méthode pour déterminer un Omen
     genererOmen() {
       const carte = this.tirerCarte();
       this.omen = this.tirerElement(carte["Omen"]);
     },
+
+    // Méthode pour déterminer une Direction
     genererDirection() {
       const carte = this.tirerCarte();
       this.direction = this.tirerElement(carte["Direction"]);
     },
+
+    // Méthode pour générer une Situation
     genererPhrase() {
       // liste stockant les index déjà utilisés
       const cartesUtilisees = [];
@@ -268,24 +331,34 @@ export default {
 
       this.phrase = `Le Sujet : ${mot1} - L'Action : ${verbe} - La Cible : ${mot2} ${adjectif} - Le Lieu : ${lieux}`;
     },
+
+    // Méthode pour générer une météo
     tirerMeteo() {
       const carte = this.tirerCarte();
       this.meteo = this.tirerElement(carte["Météo"]);
     },
+
+    // Méthode pour générer un Lieu
     tirerLieu() {
       const carte = this.tirerCarte();
       this.lieu = this.tirerElement(carte["2lieux"]);
       this.adjectifLieu = this.tirerElement(carte["4adjectifs"]); // Tirer un adjectif pour le lieu
     },
+
+    // Méthode pour générer un Objet
     tirerObjet() {
       const carte = this.tirerCarte();
       this.objet = this.tirerElement(carte["Objet"]);
       this.adjectifObjet = this.tirerElement(carte["4adjectifs"]); // Tirer un adjectif pour l'objet
     },
+
+    // Méthode pour générer un Symbole
     tirerSymbole() {
       const carte = this.tirerCarte();
       this.symbole = this.tirerElement(carte["Symbole"]);
     },
+
+    // Méthode pour générer un PNJ
     genererPNJ() {
       // Crée une liste pour stocker les index des cartes déjà tirées
       const cartesUtilisees = [];
@@ -337,6 +410,67 @@ export default {
       // Construire la phrase pour le PNJ
       this.pnj = `Un(e) ${concept} ${adjectif}, ${etoiles} que le PJ <br> Humeur : ${sentiment} - Disposition : ${disposition} <br> Caractère : ${trait1} et ${trait2} <br> Particularité physique / manie : ${apparence} <br> Sa motivation : ${motivation} <br> Son secret : ${secret} <br> Ses relations : ${relation}`;
     },
+
+    // Méthode pour générer un Livre
+    genererLivre() {
+      // Sélection aléatoire de la structure du titre
+      const structureTitre = this.tirerElement(livres.structures.join(", "));
+      console.log('structureLivre -> ', structureTitre);
+
+      let titreFinal = structureTitre;
+
+      //Extraction des éléments nécessaires selon la structure
+      // Remplacer les variables dans la structure par des éléments aléatoires
+      if (titreFinal.includes("{type}")) {
+        titreFinal = titreFinal.replace(/{type}/g, this.tirerElement(livres.types.join(', ')));
+      }
+      if (titreFinal.includes("{type2}")) {
+        titreFinal = titreFinal.replace(/{type2}/g, this.tirerElement(livres.types.join(', ')));
+      }
+      if (titreFinal.includes("{sujet}")) {
+        titreFinal = titreFinal.replace(/{sujet}/g, this.tirerElement(livres.sujets.join(', ')));
+      }
+      if (titreFinal.includes("{auteur}")) {
+        titreFinal = titreFinal.replace(/{auteur}/g, this.tirerElement(livres.auteurs.join(', ')));
+      }
+      if (titreFinal.includes("{nom}")) {
+        titreFinal = titreFinal.replace(/{nom}/g, this.tirerElement(livres.noms.join(', ')));
+      }
+      if (titreFinal.includes("{adjectif}")) {
+        titreFinal = titreFinal.replace(/{adjectif}/g, this.tirerElement(livres.adjectifs.join(', ')));
+      }
+      if (titreFinal.includes("{de|du}")) {
+        // Choix aléatoire entre "de" ou "du"
+        const connecteur = Math.random() > 0.5 ? "de" : "du";
+        titreFinal = titreFinal.replace(/{de|du}/g, connecteur);
+      }
+
+      // Mettre à jour le nom généré dans data
+      this.titreLivre = titreFinal;
+      console.log('Nom de livre généré -> ', this.titreLivre);
+    },
+
+    // Méthode pour générer un Opposant
+    genererOpposant() {
+      const puissance = this.tirerElement(oppositions.puissances.join(", "));
+      const categorie = this.tirerElement(oppositions.categories.join(", "));
+      let opposant;
+      if (categorie.includes("opposants_conventionnels")) {
+        const opposant = this.tirerElement(oppositions.opposants["opposants_conventionnels"].join(', '));
+      }
+      if (categorie.includes("animaux_dangereux")) {
+        const opposant = this.tirerElement(oppositions.opposants["animaux_dangereux"].join(', '));
+      }
+      if (categorie.includes("creatures_fantastiques")) {
+        const opposant = this.tirerElement(oppositions.opposants["creatures_fantastiques"].join(', '));
+      }
+
+      const adjectif = this.tirerElement(oppositions.adjectifs.join(', '));
+
+      this.opposant = `${puissance} ${opposant} ${adjectif}`;
+    },
+
+    // Méthode pour générer un niveau de Puissance du PNJ
     traduireEtoiles(valeur) {
       switch (valeur) {
         case '1':

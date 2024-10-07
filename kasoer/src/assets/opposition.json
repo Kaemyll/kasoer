@@ -1,0 +1,67 @@
+{
+  "puissances": [
+    "faibles",
+    "moyens",
+    "forts",
+    "puissants",
+    "redoutables",
+    "implacables",
+    "invincibles"
+  ],
+  "categories": [
+    "opposants_conventionnels",
+    "animaux_dangereux",
+    "creatures_fantastiques"
+  ],
+  "opposants_conventionnels": [
+    "brigands",
+    "assassins",
+    "mercenaires",
+    "déserteurs",
+    "soldats renégats",
+    "chasseurs de primes",
+    "vagabonds",
+    "révolutionnaires",
+    "maraudeurs",
+    "chasseurs",
+    "éclaireurs",
+    "escorteurs",
+    "patrouilleurs"
+  ],
+  "animaux_dangereux": [
+    "loups",
+    "chiens errants",
+    "ours",
+    "serpents venimeux",
+    "corbeaux géants",
+    "lynx",
+    "aigles"
+  ],
+  "creatures_fantastiques": [
+    "zombies",
+    "trolls",
+    "kobolds",
+    "ogres",
+    "harpies",
+    "squelettes",
+    "goules",
+    "dragons",
+    "spectres",
+    "gobelins",
+    "gnolls"
+  ],
+  "adjectifs": [
+    "affamés",
+    "enragés",
+    "désespérés",
+    "vindicatifs",
+    "sans pitié",
+    "assoiffés de sang",
+    "rusés",
+    "craintifs",
+    "bruyants",
+    "sauvages",
+    "sournois",
+    "hargneux"
+  ]
+}

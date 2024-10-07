@@ -1,0 +1,15 @@
+[
+  {
+    "choix": [
+      "Le {nom} {adjectif}",
+      "La {nom} {adjectif}",
+      "Le {nom} et le {nom}",
+      "La {nom} et la {nom}",
+      "Le {nom} de la {nom}",
+      "La {nom} du {nom}",
+      "Chez {nom} {adjectif}",
+      "Au {nom} {adjectif}",
+      "Au {nom} du {nom}"
+    ]
+  }
+]
