@@ -138,9 +138,7 @@
         <div class="row q-my-md">
           <div v-if="phrase" class="q-mx-md q-mt-md col">
             <q-card>
-              <q-card-section>
-                {{ phrase }}
-              </q-card-section>
+              <q-card-section v-html="phrase"></q-card-section>
             </q-card>
           </div>
           <div v-else class="q-mx-md q-mt-md col">
@@ -226,6 +224,8 @@ import bourgs from './assets/noms_villes.json';
 import livres from './assets/biblio.json';
 import oppositions from './assets/opposition.json';
 import calendaire from './assets/calendrier.json';
+import themes from './assets/theme.json';
+import situations from './assets/situations.json';
 
 export default {
   data() {
@@ -248,7 +248,9 @@ export default {
       nomBourg: '',
       titreLivre: '',
       opposant: '',
-      date: ''
+      date: '',
+      theme: '',
+      situation: ''
     };
   },
   mounted() {
@@ -297,6 +299,15 @@ export default {
       const elements = chaine.split(", ");
       const index = Math.floor(Math.random() * elements.length);
       return elements[index];
+    },
+    // Nouvelle méthode pour tirer un thème aléatoire
+    tirerTheme() {
+      const index = Math.floor(Math.random() * themes.themes.length);
+      return themes.themes[index];
+    },
+    tirerSituation() {
+      const index = Math.floor(Math.random() * situations.situations_dramatiques.length);
+      return situations.situations_dramatiques[index];
     },
 
     // Méthode pour déterminer un Omen
@@ -366,6 +377,9 @@ export default {
       // liste stockant les index déjà utilisés
       const cartesUtilisees = [];
 
+      const theme = this.tirerTheme();
+      const situation = this.tirerSituation();
+
       // Tirage 1
       const carte1 = this.tirerCarte();
       cartesUtilisees.push(carte1.Index);
@@ -385,8 +399,9 @@ export default {
       const carte5 = this.tirerCarteDifferente(cartesUtilisees);
       const lieux = this.tirerElement(carte5["2lieux"]);
 
-      this.phrase = `Le Sujet : ${mot1} - L'Action : ${verbe} - La Cible : ${mot2} ${adjectif} - Le Lieu : ${lieux}`;
+      this.phrase = `Le Thème : ${theme} - La Situation dramatique : ${situation} <br> Le Sujet : ${mot1} - L'Action : ${verbe} - La Cible : ${mot2} ${adjectif} - Le Lieu : ${lieux}`;
     },
+
     // Méthode pour générer un PNJ
     genererPNJ() {
       // Crée une liste pour stocker les index des cartes déjà tirées
@@ -569,9 +584,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.q-pa-md {
-  padding: 16px;
-}
-</style>
