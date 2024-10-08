@@ -1,12 +1,11 @@
 {
   "puissances": [
-    "faibles",
-    "moyens",
-    "forts",
-    "puissants",
-    "redoutables",
-    "implacables",
-    "invincibles"
+    "faibles (I)",
+    "moyens (II)",
+    "forts (III)",
+    "puissants (IV)",
+    "redoutables (V)",
+    "implacables (VI)"
   ],
   "categories": [
     "opposants_conventionnels",
@@ -26,7 +25,11 @@
     "chasseurs",
     "éclaireurs",
     "escorteurs",
-    "patrouilleurs"
+    "patrouilleurs",
+    "pirates",
+    "esclavagistes",
+    "cannibales",
+    "cultistes"
   ],
   "animaux_dangereux": [
     "loups",
@@ -35,7 +38,9 @@
     "serpents venimeux",
     "corbeaux géants",
     "lynx",
-    "aigles"
+    "aigles",
+    "sangliers",
+    "taureaux"
   ],
   "creatures_fantastiques": [
     "zombies",
@@ -48,7 +53,8 @@
     "dragons",
     "spectres",
     "gobelins",
-    "gnolls"
+    "gnolls",
+    "araignées géantes"
   ],
   "adjectifs": [
     "affamés",
@@ -62,6 +68,10 @@
     "bruyants",
     "sauvages",
     "sournois",
-    "hargneux"
+    "hargneux",
+    "blessés",
+    "désorientés",
+    "acculés",
+    "prudents"
   ]
 }
