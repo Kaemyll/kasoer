@@ -44,10 +44,13 @@
     "Bestiaire",
     "Témoignage",
     "Voyage",
-    "Art"
+    "Art",
+    "Minutes",
+    "Biographie"
   ],
   "sujets": [
     "herbes médicinales",
+    "poids & mesures",
     "herboristerie",
     "alchimie",
     "potions",
@@ -56,17 +59,21 @@
     "sciences des astres",
     "arts divinatoires",
     "cartomancie",
+    "oracles & sens commun",
     "divination",
     "réincarnation & métempsychose",
     "thaumaturgie",
     "hermétisme & symbolique",
     "chants de Pavane",
     "morts",
+    "vérité, beauté et chevalerie",
     "ceux qui rêvent à jamais",
     "royaume des rêves",
     "cercles de l'Enfer",
     "royaumes infernaux",
     "arcanes majeurs",
+    "causes communes",
+    "équitation & montures",
     "Arts Estranges",
     "ombres",
     "voyages planaires",
@@ -76,8 +83,12 @@
     "mythologie",
     "créatures mythologiques",
     "éléments naturels",
+    "Torture & Moralité",
     "rites sacrés",
+    "Cours de justice",
     "batailles épiques",
+    "Mathématiques & astronomie",
+    "Lignages & descendances",
     "révélations célestes",
     "philosophie antique",
     "poisons et antidotes",
@@ -96,6 +107,7 @@
     "lois des rois",
     "abominations",
     "mythes fondateurs",
+    "fables & contes",
     "alphabets anciens",
     "art de la guerre",
     "guerres & conquêtes",
@@ -131,8 +143,8 @@
     "Marolorn",
     "Vorihaus",
     "Princesse Alinur",
-    "Meupiteres le Sage*",
-    "Jareksi le Ménestrel*",
+    "Meupiteres le Sage",
+    "Jareksi le Ménestrel",
     "Marnedokyn",
     "Rameul Sentima",
     "Noth Jawson",
@@ -140,13 +152,15 @@
     "Basilea Rugitob",
     "Idallore Phygiula",
     "Comte Teldreet",
-    "Ebin"
+    "Ebin",
+    "Alerith Dagnei"
   ],
   "noms": [
     "Chevalier",
     "Reine",
     "Dragon",
     "Château",
+    "Vie & Mort",
     "Magie",
     "Aventure",
     "Quête",
@@ -170,7 +184,8 @@
     "Mystères",
     "Ver",
     "Univers",
-    "Guerre"
+    "Guerre",
+    "Citations"
   ],
   "adjectifs": [
     "Sombres",
@@ -205,6 +220,7 @@
     "Profanes",
     "Primitifs",
     "Inavouables",
-    "Indicibles"
+    "Indicibles",
+    "Fameuses"
   ]
 }
