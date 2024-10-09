@@ -1,10 +1,13 @@
 <template>
-  <q-layout>
-    <q-header elevated>
+  <q-layout class="bg-blue-grey-2">
+    <q-header reveal elevated class="bg-light-blue-10">
       <q-toolbar>
         <q-toolbar-title>
           KaSoeR, l'oracle de jdr solo
         </q-toolbar-title>
+
+        <!-- Bouton de reset -->
+        <q-btn @click="resetChamps" label="Reset" color="primary" class="q-ml-sm"/>
 
         <q-tabs class="horloge">
           <q-tab id="horloge">{{ horloge }}</q-tab>
@@ -16,11 +19,12 @@
     <q-page-container>
       <q-page class="q-ma-md">
 
-<!--        Affichage Omen / Direction / Météo / Objet-->
+        <!--        Affichage Omen / Direction / Météo / Objet-->
         <div class="row q-my-md">
-          <q-btn @click="genererOmen" label="Générer un omen" color="purple-3" text-color="black" class="q-mx-md q-mt-md col"/>
+          <q-btn @click="genererOmen" label="Générer un omen" color="purple-3" text-color="black"
+                 class="q-mx-md q-mt-md col"/>
           <q-btn @click="genererDirection" label="Générer une direction" color="purple-5" class="q-mr-md q-mt-md col"/>
-          <q-btn @click="tirerMeteo" label="Générer une météo" color="purple-7" class="q-mr-md q-mt-md col"/>
+          <q-btn @click="tirerMeteo" label="Générer une Meteo" color="purple-7" class="q-mr-md q-mt-md col"/>
           <q-btn @click="tirerObjet" label="Générer un objet" color="purple-9" class="q-mr-md q-mt-md col"/>
         </div>
         <div class="row q-my-md">
@@ -51,13 +55,13 @@
           <div v-if="meteo" class="q-mr-md q-mt-md col">
             <q-card>
               <q-card-section class="text-center">
-                Météo : {{ meteo }}
+                Meteo : {{ meteo }}
               </q-card-section>
             </q-card>
           </div>
           <div v-else class="q-mx-md q-mt-md col">
             <q-card>
-              <q-card-section class="">Aucun résultat de météo pour le moment</q-card-section>
+              <q-card-section class="">Aucun résultat de Meteo pour le moment</q-card-section>
             </q-card>
           </div>
           <div v-if="objet" class="q-mr-md q-mt-md col">
@@ -74,13 +78,15 @@
           </div>
         </div>
 
-<!--        Affichage Lieu / Symbole / Date / Origine culturelle-->
+        <!--        Affichage Lieu / Symbole / Date / Origine culturelle-->
         <q-separator color="indigo-10" spaced></q-separator>
         <div class="row q-my-md">
-          <q-btn @click="tirerLieu" label="Générer un lieu" color="green-3" text-color="black" class="q-mx-md q-mt-md col" />
-          <q-btn @click="tirerSymbole" label="Générer un symbole" color="green-5" class="q-mr-md q-mt-md col" />
-          <q-btn @click="genererDate" label="Générer une date" class="q-mx-md q-mt-md col" color="green-7" />
-          <q-btn @click="genererOrigineCulturelle" label="Générer une origine culturelle" color="green-9" class="q-mx-md q-mt-md col" />
+          <q-btn @click="tirerLieu" label="Générer un lieu" color="green-3" text-color="black"
+                 class="q-mx-md q-mt-md col"/>
+          <q-btn @click="tirerSymbole" label="Générer un symbole" color="green-5" class="q-mr-md q-mt-md col"/>
+          <q-btn @click="genererDate" label="Générer une date" class="q-mx-md q-mt-md col" color="green-7"/>
+          <q-btn @click="genererOrigineCulturelle" label="Générer une origine culturelle" color="green-9"
+                 class="q-mx-md q-mt-md col"/>
         </div>
         <div class="row q-my-md">
           <div v-if="lieu" class="q-mx-md q-mt-md col">
@@ -109,7 +115,7 @@
           </div>
           <div v-if="date" class="q-mx-md q-mt-md col">
             <q-card>
-              <q-card-section class=""> {{date}} </q-card-section>
+              <q-card-section class=""> {{ date }}</q-card-section>
             </q-card>
           </div>
           <div v-else class="q-mx-md q-mt-md col">
@@ -129,16 +135,44 @@
           </div>
         </div>
 
-<!--        Affichage génération d'une situation et d'un PNJ-->
+        <!--        Affichage génération d'une situation et d'un PNJ-->
         <q-separator color="indigo-10" spaced></q-separator>
         <div class="row q-my-md">
-          <q-btn @click="genererPhrase" label="Générer une situation" color="red-6" class="q-mx-md q-mt-md col"/>
+          <q-btn @click="genererPhrase" label="Générer un Contexte" color="red-10" class="q-mx-md q-mt-md col"/>
           <q-btn @click="genererPNJ" label="Générer un PNJ" color="red-10" class="q-mx-md q-mt-md col"/>
         </div>
+
+        <div class="q-mx-md q-mt-md row">
+          <div class="col-6 text-center">
+            <q-btn-group push>
+              <q-btn @click="genererTheme" label="Theme" color="red-5" size="sm"/>
+              <q-btn @click="genererSituation" label="Situation" color="red-5" size="sm"/>
+              <q-btn @click="genererSujet" label="Sujet" color="red-5" size="sm"/>
+              <q-btn @click="genererAction" label="Action" color="red-5" size="sm"/>
+              <q-btn @click="genererCible" label="Cible" color="red-5" size="sm"/>
+              <q-btn @click="genererLieu" label="Lieu" color="red-5" size="sm"/>
+            </q-btn-group>
+          </div>
+          <div class="col-6 text-center">
+            <q-btn-group push>
+              <q-btn @click="genererConcept" label="Concept" color="red-5" size="sm"/>
+              <q-btn @click="genererEtoiles" label="Puissance" color="red-5" size="sm"/>
+              <q-btn @click="genererOriginePNJ" label="Origine" color="red-5" size="sm"/>
+              <q-btn @click="genererSentimentDisposition" label="Humeur" color="red-5" size="sm"/>
+              <q-btn @click="genererApparence" label="Apparence" color="red-5" size="sm"/>
+              <q-btn @click="genererMotivation" label="Motivation" color="red-5" size="sm"/>
+              <q-btn @click="genererTraits" label="Traits" color="red-5" size="sm"/>
+              <q-btn @click="genererSecret" label="Secret" color="red-5" size="sm"/>
+              <q-btn @click="genererRelations" label="Relations" color="red-5" size="sm"/>
+            </q-btn-group>
+          </div>
+        </div>
+
         <div class="row q-my-md">
-          <div v-if="phrase" class="q-mx-md q-mt-md col">
+          <div v-if="contexteSituation" class="q-mx-md q-mt-md col">
             <q-card>
-              <q-card-section v-html="phrase"></q-card-section>
+              <q-card-section v-html="contexteSituation">
+              </q-card-section>
             </q-card>
           </div>
           <div v-else class="q-mx-md q-mt-md col">
@@ -159,10 +193,11 @@
           </div>
         </div>
 
-<!--        Affichage Opposition / Auberge / Cité / Livre-->
+        <!--        Affichage Opposition / Auberge / Cité / Livre-->
         <q-separator color="indigo-10" spaced></q-separator>
         <div class="row q-my-md q-gutter-xs">
-          <q-btn label="Générer une opposition" @click="genererOpposant" color="amber-3" text-color="black" class="q-mx-md q-mt-md col"/>
+          <q-btn label="Générer une opposition" @click="genererOpposant" color="amber-3" text-color="black"
+                 class="q-mx-md q-mt-md col"/>
           <q-btn label="Générer une auberge" @click="genererNomAuberge" color="amber-5" class="q-mx-md q-mt-md col"/>
           <q-btn label="Générer une cité/bourgade" @click="genererBourg" color="amber-7" class="q-mx-md q-mt-md col"/>
           <q-btn label="Générer un livre" @click="genererLivre" color="amber-9" class="q-mx-md q-mt-md col"/>
@@ -190,7 +225,7 @@
           </div>
           <div v-if="nomBourg" class="q-mx-md q-mt-md col">
             <q-card>
-              <q-card-section class=""> {{ nomBourg }} </q-card-section>
+              <q-card-section class=""> {{ nomBourg }}</q-card-section>
             </q-card>
           </div>
           <div v-else class="q-mx-md q-mt-md col">
@@ -200,7 +235,7 @@
           </div>
           <div v-if="titreLivre" class="q-mx-md q-mt-md col">
             <q-card>
-              <q-card-section class=""> {{ titreLivre }} </q-card-section>
+              <q-card-section class=""> {{ titreLivre }}</q-card-section>
             </q-card>
           </div>
           <div v-else class="q-mx-md q-mt-md col">
@@ -212,6 +247,12 @@
 
       </q-page>
     </q-page-container>
+
+    <q-footer reveal elevated class="bg-light-blue-10">
+      <q-toolbar class="justify-center">
+        <q-toolbar-title class="text-h6">Adapté pour Kaetherii</q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -233,6 +274,7 @@ export default {
       phrase: '',
       meteo: '',
       pnj: '',
+      contexteSituation: '',
       lieu: '',
       objet: '',
       symbole: '',
@@ -250,7 +292,8 @@ export default {
       opposant: '',
       date: '',
       theme: '',
-      situation: ''
+      situation: '',
+      relations: ''
     };
   },
   mounted() {
@@ -281,6 +324,29 @@ export default {
       this.tempsEcoule = `Temps écoulé : ${heures}:${minutes}:${secondes}`;
     },
 
+    // Méthode pour reset tous les champs (sauf compteur de temps écoulé et date)
+    resetChamps() {
+      this.phrase = '';
+      this.theme = '';
+      this.situation = '';
+      this.meteo = '';
+      this.pnj = '';
+      this.lieu = '';
+      this.objet = '';
+      this.symbole = '';
+      this.adjectifLieu = '';
+      this.adjectifObjet = '';
+      this.omen = '';
+      this.direction = '';
+      this.horloge = '';
+      this.nomAuberge = '';
+      this.origineCulturelle = '';
+      this.nomBourg = '';
+      this.titreLivre = '';
+      this.opposant = '';
+      this.date = '';
+    },
+
     // Méthode pour tirer une carte de l'oracle
     tirerCarte() {
       const index = Math.floor(Math.random() * cartes.length);
@@ -300,15 +366,6 @@ export default {
       const index = Math.floor(Math.random() * elements.length);
       return elements[index];
     },
-    // Nouvelle méthode pour tirer un thème aléatoire
-    tirerTheme() {
-      const index = Math.floor(Math.random() * themes.themes.length);
-      return themes.themes[index];
-    },
-    tirerSituation() {
-      const index = Math.floor(Math.random() * situations.situations_dramatiques.length);
-      return situations.situations_dramatiques[index];
-    },
 
     // Méthode pour déterminer un Omen
     genererOmen() {
@@ -320,10 +377,10 @@ export default {
       const carte = this.tirerCarte();
       this.direction = this.tirerElement(carte["Direction"]);
     },
-    // Méthode pour générer une météo
+    // Méthode pour générer une Météo
     tirerMeteo() {
       const carte = this.tirerCarte();
-      this.meteo = this.tirerElement(carte["Météo"]);
+      this.meteo = this.tirerElement(carte["Meteo"]);
     },
     // Méthode pour générer un Objet
     tirerObjet() {
@@ -374,90 +431,187 @@ export default {
 
     // Méthode pour générer une Situation
     genererPhrase() {
-      // liste stockant les index déjà utilisés
-      const cartesUtilisees = [];
-
-      const theme = this.tirerTheme();
-      const situation = this.tirerSituation();
-
-      // Tirage 1
-      const carte1 = this.tirerCarte();
-      cartesUtilisees.push(carte1.Index);
-      const mot1 = this.tirerElement(carte1["10mots"]);
-
-      const carte2 = this.tirerCarteDifferente(cartesUtilisees);
-      cartesUtilisees.push(carte2.Index);
-      const verbe = this.tirerElement(carte2["3verbes"]);
-
-      const carte3 = this.tirerCarteDifferente(cartesUtilisees)
-      cartesUtilisees.push(carte3.Index);
-      const mot2 = this.tirerElement(carte3["10mots"]);
-
-      const carte4 = this.tirerCarteDifferente(cartesUtilisees)
-      const adjectif = this.tirerElement(carte4["4adjectifs"]);
-
-      const carte5 = this.tirerCarteDifferente(cartesUtilisees);
-      const lieux = this.tirerElement(carte5["2lieux"]);
-
-      this.phrase = `Le Thème : ${theme} - La Situation dramatique : ${situation} <br> Le Sujet : ${mot1} - L'Action : ${verbe} - La Cible : ${mot2} ${adjectif} - Le Lieu : ${lieux}`;
+      this.genererTheme();
+      this.genererSituation();
+      this.genererSujet();
+      this.genererAction();
+      this.genererCible();
+      this.genererLieu();
+      this.mettreAJourContexte();
+    },
+    mettreAJourContexte() {
+      this.contexteSituation = `Thème : ${this.theme}<br>
+                                Situation dramatique: ${this.situation}<br>
+                                Sujet : ${this.sujet}<br>
+                                Action : ${this.action}<br>
+                                Cible : ${this.cible}<br>
+                                Lieu: ${this.lieu}`;
     },
 
     // Méthode pour générer un PNJ
     genererPNJ() {
-      // Crée une liste pour stocker les index des cartes déjà tirées
+      // Génère chaque sous-composant individuellement
+      this.genererConcept();
+      this.genererOriginePNJ();
+      this.genererEtoiles();
+      this.genererSentimentDisposition();
+      this.genererApparence();
+      this.genererMotivation();
+      this.genererTraits();
+      this.genererSecret();
+      this.genererRelations();
+      this.mettreAJourPNJ();
+    },
+    // Méthode pour mettre à jour l'affichage du bloc PNJ
+    mettreAJourPNJ() {
+      // Combine toutes les parties pour former le PNJ complet
+      this.pnj = `Un(e) ${this.conceptAdjectif}, ${this.originePNJ}, ${this.etoiles}<br>
+                  Humeur : ${this.sentimentDisposition} <br>
+                  Apparence : ${this.apparence} <br>
+                  Motivation : ${this.motivation} <br>
+                  Traits : ${this.traits} <br>
+                  Secret : ${this.secret} <br>
+                  Relations : ${this.relations}`;
+    },
+
+    genererTheme() {
+      const index = Math.floor(Math.random() * themes.themes.length);
+      this.theme = themes.themes[index];
+      console.log("this.theme --> ", this.theme);
+      this.mettreAJourContexte();
+    },
+    genererSituation() {
+      const index = Math.floor(Math.random() * situations.situations_dramatiques.length);
+      this.situation = situations.situations_dramatiques[index];
+      this.mettreAJourContexte();
+    },
+    genererSujet() {
+      // liste stockant les index déjà utilisés
       const cartesUtilisees = [];
-
+      // Tirage 1
       const carte1 = this.tirerCarte();
-      const concept = this.tirerElement(carte1["Concept"]);
       cartesUtilisees.push(carte1.Index);
-
+      const mot1 = this.tirerElement(carte1["10mots"]);
+      // Tirage 2
       const carte2 = this.tirerCarteDifferente(cartesUtilisees);
       cartesUtilisees.push(carte2.Index);
-      const etoiles = this.traduireEtoiles(carte2["Etoiles/5"]);
+      const mot2 = this.tirerElement(carte2["10mots"]);
 
+      this.sujet = `${mot1} + ${mot2}`;
+
+      this.mettreAJourContexte();
+    },
+    genererAction() {
+      // liste stockant les index déjà utilisés
+      const cartesUtilisees = [];
+      // Tirage 1
+      const carte1 = this.tirerCarte();
+      cartesUtilisees.push(carte1.Index);
+      const verbe = this.tirerElement(carte1["3verbes"])
+      this.action = `${verbe}`
+
+      this.mettreAJourContexte();
+    },
+    genererCible() {
+      // liste stockant les index déjà utilisés
+      const cartesUtilisees = [];
+      // Tirage 1
+      const carte1 = this.tirerCarte();
+      cartesUtilisees.push(carte1.Index);
+      const mot1 = this.tirerElement(carte1["10mots"]);
+      // Tirage 2
+      const carte2 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte2.Index);
+      const mot2 = this.tirerElement(carte2["4adjectifs"]);
+      this.cible = `${mot1} ${mot2}`;
+      this.mettreAJourContexte();
+    },
+    genererLieu() {
+      // liste stockant les index déjà utilisés
+      const cartesUtilisees = [];
+      // Tirage 1
+      const carte1 = this.tirerCarte();
+      cartesUtilisees.push(carte1.Index);
+      const mot1 = this.tirerElement(carte1["2lieux"]);
+      // Tirage 2
+      const carte2 = this.tirerCarteDifferente(cartesUtilisees);
+      cartesUtilisees.push(carte2.Index);
+      const mot2 = this.tirerElement(carte2["4adjectifs"]);
+      this.lieu = `${mot1} ${mot2}`;
+      this.mettreAJourContexte();
+    },
+
+    // Méthode pour générer un niveau de Puissance du PNJ
+    genererConcept() {
+      const cartesUtilisees = [];
+      const carte1 = this.tirerCarte();
+      cartesUtilisees.push(carte1.Index);
+      const concept = this.tirerElement(carte1["Concept"]);
+
+      const carte2 = this.tirerCarteDifferente(cartesUtilisees);
+      const adjectif = this.tirerElement(carte2["4adjectifs"]);
+
+      this.conceptAdjectif = `${concept} ${adjectif}`;
+
+      this.mettreAJourPNJ();
+    },
+    genererOriginePNJ() {
+      this.originePNJ = this.genererOrigineCulturelle();
+      console.log("origine PNJ en solo --> ", this.originePNJ);
+      this.mettreAJourPNJ();
+    },
+    // Méthode pour générer Niveau de Puissance (Étoiles)
+    genererEtoiles() {
+      const carte = this.tirerCarte();
+      this.etoiles = this.traduireEtoiles(carte["Etoiles/5"]);
+      this.mettreAJourPNJ();
+    },
+    // Méthode pour générer Sentiment + Disposition
+    genererSentimentDisposition() {
+      const cartesUtilisees = [];
       const carte3 = this.tirerCarteDifferente(cartesUtilisees);
-      cartesUtilisees.push(carte3.Index);
-      const adjectif = this.tirerElement(carte3["4adjectifs"]);
+      const sentiment = this.tirerElement(carte3["Sentiment"]);
 
       const carte4 = this.tirerCarteDifferente(cartesUtilisees);
-      cartesUtilisees.push(carte4.Index);
-      const sentiment = this.tirerElement(carte4["Sentiment"]);
+      const disposition = this.tirerElement(carte4["Disposition"]);
 
-      const carte5 = this.tirerCarteDifferente(cartesUtilisees);
-      cartesUtilisees.push(carte5.Index);
-      const disposition = this.tirerElement(carte5["Disposition"]);
-
-      const carte6 = this.tirerCarteDifferente(cartesUtilisees);
-      cartesUtilisees.push(carte6.Index);
-      const apparence = this.tirerElement(carte6["2apparences"]);
-
-      const carte7 = this.tirerCarteDifferente(cartesUtilisees);
-      cartesUtilisees.push(carte7.Index);
-      const motivation = this.tirerElement(carte7["Motivation"]);
-
-      const carte8 = this.tirerCarteDifferente(cartesUtilisees);
-      cartesUtilisees.push(carte8.Index);
-      const trait1 = this.tirerElement(carte8["3traits"]);
-
-      const carte9 = this.tirerCarteDifferente(cartesUtilisees);
-      cartesUtilisees.push(carte9.Index);
-      const trait2 = this.tirerElement(carte9["3traits"]);
-
-      const carte10 = this.tirerCarteDifferente(cartesUtilisees);
-      cartesUtilisees.push(carte10.Index);
-      const secret = this.tirerElement(carte10["Secret"]);
-
-      const carte11 = this.tirerCarteDifferente(cartesUtilisees);
-      cartesUtilisees.push(carte11.Index);
-      const relation = this.tirerElement(carte11["Relation"]);
-
-      const originePNJ = this.genererOrigineCulturelle();
-      console.log('Origine du PNJ --> ', originePNJ)
-
-      // Construire la phrase pour le PNJ
-      this.pnj = `Un(e) ${concept} ${adjectif}, ${originePNJ}, ${etoiles} que le PJ <br> Humeur : ${sentiment} - Disposition : ${disposition} <br> Caractère : ${trait1} et ${trait2} <br> Particularité physique / manie : ${apparence} <br> Sa motivation : ${motivation} <br> Son secret : ${secret} <br> Ses relations : ${relation}`;
+      this.sentimentDisposition = `${sentiment} - ${disposition}`;
+      this.mettreAJourPNJ();
     },
-    // Méthode pour générer un niveau de Puissance du PNJ
+    // Méthode pour générer Apparence
+    genererApparence() {
+      const carte = this.tirerCarte();
+      this.apparence = this.tirerElement(carte["2apparences"]);
+      this.mettreAJourPNJ();
+    },
+    // Méthode pour générer Motivation
+    genererMotivation() {
+      const carte = this.tirerCarte();
+      this.motivation = this.tirerElement(carte["Motivation"]);
+      this.mettreAJourPNJ();
+    },
+    // Méthode pour générer Traits
+    genererTraits() {
+      const carte = this.tirerCarte();
+      const trait1 = this.tirerElement(carte["3traits"]);
+      const carte2 = this.tirerCarteDifferente([carte.Index]);
+      const trait2 = this.tirerElement(carte2["3traits"]);
+      this.traits = `${trait1} et ${trait2}`;
+      this.mettreAJourPNJ();
+    },
+    // Méthode pour générer Secret
+    genererSecret() {
+      const carte = this.tirerCarte();
+      this.secret = this.tirerElement(carte["Secret"]);
+      console.log("secret en solo -> ", this.secret);
+      this.mettreAJourPNJ();
+    },
+    // Méthode pour générer Relations
+    genererRelations() {
+      const carte = this.tirerCarte();
+      this.relations = this.tirerElement(carte["Relation"]);
+      this.mettreAJourPNJ();
+    },
     traduireEtoiles(valeur) {
       switch (valeur) {
         case '1':
@@ -501,23 +655,22 @@ export default {
 
       // Générer des éléments pour remplir la structure
       const nom1 = this.tirerElement(auberges.noms.join(", "));
-      console.log('nom1 --> ', nom1);
       const nom2 = this.tirerElement(auberges.noms.join(", "));
-      console.log('nom2 --> ', nom2);
       const adjectif = this.tirerElement(auberges.adjectifs.join(", "));
-      console.log('adjectif --> ', adjectif);
 
       // Remplacement des placeholders dans la structure choisie
       this.nomAuberge = selectedStructure
           .replace("{nom}", nom1)  // Remplace {nom} par le nom généré
           .replace("{nom}", nom2)  // Deuxième remplacement pour la même clé si nécessaire
           .replace("{adjectif}", adjectif);  // Remplace {adjectif} par l'adjectif généré
+
+      console.log("Nom de l'auberge --> ", this.nomAuberge);
     },
     // Méthode pour générer le nom d'une cité/bourg avec une structure
     genererBourg() {
       // Sélection d'une structure de cité aléatoire
       const structureVille = this.tirerElement(bourgs.structures.join(", "));
-      console.log ('structureVille -> ', structureVille);
+      console.log('structureVille -> ', structureVille);
 
       // Sélectionner des éléments (nom, adjectif, etc.) selon la structure choisie
       let nom1 = this.tirerElement(bourgs.noms.join(", "));
@@ -527,7 +680,7 @@ export default {
 
       // Remplacer les variables dans la structure
       const nomFinal = structureVille
-          .replace(/\{nom\}/g, (match, offset) => offset === 0 ? nom1 : nom2)
+          .replace(/\{nom}/g, (match, offset) => offset === 0 ? nom1 : nom2)
           .replace('{adjectif}', adjectif)
           .replace('{connecteur}', connecteur);
 
