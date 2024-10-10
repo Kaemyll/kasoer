@@ -1,13 +1,49 @@
 <template>
-  <q-layout class="bg-blue-grey-2">
+  <q-layout view="lHh Lpr lFf" class="bg-blue-grey-2">
+
+    <q-drawer v-model="drawerLeft" side="left" bordered class="bg-amber-2">
+      <div>
+        <q-card class="text-center q-ma-sm rounded bg-blue-grey-14 text-amber-14 text-bold">
+
+          <q-card-section>
+            <q-btn icon="bi-feather" color="amber-14" size="sm" />
+            Journal de Bord
+            <q-btn icon="bi-feather" color="amber-14" size="sm" />
+          </q-card-section>
+
+        </q-card>
+        <q-input
+            v-model="enteredGoalValue"
+            label="Ajouter une entrée"
+            rounded
+            filled
+            class="q-ma-sm"
+            clearable
+            clear-icon="bi-x"
+            autogrow
+        />
+        <q-btn label="Nouvelle entrée" color="blue-grey-6" @click="addEntry" class="q-ml-sm" glossy size="sm"/>
+        <q-btn label="Exporter le journal" color="blue-grey-6" @click="exportDiary" class="q-ml-sm" glossy size="sm"/>
+        <q-separator color="indigo-10" spaced></q-separator>
+        <ul>
+          <li v-for="(entry, index) in journalEntries" :key="index" ref="journalItem" @click="removeEntry(index)">
+            {{ index }} - {{ entry }}
+          </li>
+        </ul>
+      </div>
+    </q-drawer>
+
     <q-header reveal elevated class="bg-light-blue-10">
       <q-toolbar>
         <q-toolbar-title>
+          <q-icon name="bi-bug-fill" />
           KaSoeR, l'oracle de jdr solo
         </q-toolbar-title>
 
+        <q-btn flat @click="drawerLeft = !drawerLeft" round dense icon="bi-feather"></q-btn>
+
         <!-- Bouton de reset -->
-        <q-btn @click="resetChamps" label="Reset" color="primary" class="q-ml-sm"/>
+        <q-btn flat @click="resetChamps" round dense icon="bi-x-circle"/>
 
         <q-tabs class="horloge">
           <q-tab id="horloge">{{ horloge }}</q-tab>
@@ -22,10 +58,17 @@
         <!--        Affichage Omen / Direction / Météo / Objet-->
         <div class="row q-my-md">
           <q-btn @click="genererOmen" label="Générer un omen" color="purple-3" text-color="black"
-                 class="q-mx-md q-mt-md col"/>
-          <q-btn @click="genererDirection" label="Générer une direction" color="purple-5" class="q-mr-md q-mt-md col"/>
-          <q-btn @click="tirerMeteo" label="Générer une Meteo" color="purple-7" class="q-mr-md q-mt-md col"/>
-          <q-btn @click="tirerObjet" label="Générer un objet" color="purple-9" class="q-mr-md q-mt-md col"/>
+                 :icon="biPatchQuestion()"
+                 class="q-mx-md q-mt-md col" glossy/>
+          <q-btn @click="genererDirection" label="Générer une direction" color="purple-5"
+                 :icon="biCompass()"
+                 class="q-mr-md q-mt-md col" glossy/>
+          <q-btn @click="tirerMeteo" label="Générer une Meteo" color="purple-7"
+                 :icon="biCloudSun()"
+                 class="q-mr-md q-mt-md col" glossy/>
+          <q-btn @click="tirerObjet" label="Générer un objet" color="purple-9"
+                 :icon="biBackpack3()"
+                 class="q-mr-md q-mt-md col" glossy/>
         </div>
         <div class="row q-my-md">
           <div v-if="omen" class="q-mx-md q-mt-md col">
@@ -82,11 +125,17 @@
         <q-separator color="indigo-10" spaced></q-separator>
         <div class="row q-my-md">
           <q-btn @click="tirerLieu" label="Générer un lieu" color="green-3" text-color="black"
-                 class="q-mx-md q-mt-md col"/>
-          <q-btn @click="tirerSymbole" label="Générer un symbole" color="green-5" class="q-mr-md q-mt-md col"/>
-          <q-btn @click="genererDate" label="Générer une date" class="q-mx-md q-mt-md col" color="green-7"/>
-          <q-btn @click="genererOrigineCulturelle" label="Générer une origine culturelle" color="green-9"
-                 class="q-mx-md q-mt-md col"/>
+                 :icon="biGeoAlt()"
+                 class="q-mx-md q-mt-md col" glossy/>
+          <q-btn @click="tirerSymbole" label="Générer un symbole" color="green-5"
+                 :icon="biFileImage()"
+                 class="q-mr-md q-mt-md col" glossy/>
+          <q-btn @click="genererDate" label="Générer une date" color="green-7"
+                 :icon="biCalendar3()"
+                 class="q-mx-md q-mt-md col" glossy/>
+          <q-btn @click="genererOrigineCulturelle" label="Générer une origine" color="green-9"
+                 :icon="biGlobe()"
+                 class="q-mx-md q-mt-md col" glossy/>
         </div>
         <div class="row q-my-md">
           <div v-if="lieu" class="q-mx-md q-mt-md col">
@@ -138,12 +187,15 @@
         <!--        Affichage génération d'une situation et d'un PNJ-->
         <q-separator color="indigo-10" spaced></q-separator>
         <div class="row q-my-md">
-          <q-btn @click="genererPhrase" label="Générer un Contexte" color="red-10" class="q-mx-md q-mt-md col"/>
-          <q-btn @click="genererPNJ" label="Générer un PNJ" color="red-10" class="q-mx-md q-mt-md col"/>
+          <q-btn @click="genererContexte" label="Générer un Contexte" color="red-10"
+                 :icon="biBodyText()"
+                 class="q-mx-md q-mt-md col-5" glossy/>
+          <q-btn @click="genererPNJ" label="Générer un PNJ" color="red-10"
+                 :icon="biPersonVcard()"
+                 class="q-mx-md q-mt-md col" glossy/>
         </div>
-
         <div class="q-mx-md q-mt-md row">
-          <div class="col-6 text-center">
+          <div class="q-mx-md col-5 text-center">
             <q-btn-group push>
               <q-btn @click="genererTheme" label="Theme" color="red-5" size="sm"/>
               <q-btn @click="genererSituation" label="Situation" color="red-5" size="sm"/>
@@ -153,7 +205,7 @@
               <q-btn @click="genererLieu" label="Lieu" color="red-5" size="sm"/>
             </q-btn-group>
           </div>
-          <div class="col-6 text-center">
+          <div class="q-mx-md col text-center">
             <q-btn-group push>
               <q-btn @click="genererConcept" label="Concept" color="red-5" size="sm"/>
               <q-btn @click="genererEtoiles" label="Puissance" color="red-5" size="sm"/>
@@ -167,9 +219,8 @@
             </q-btn-group>
           </div>
         </div>
-
         <div class="row q-my-md">
-          <div v-if="contexteSituation" class="q-mx-md q-mt-md col">
+          <div v-if="contexteSituation" class="q-mx-md q-mt-md col-5">
             <q-card>
               <q-card-section v-html="contexteSituation">
               </q-card-section>
@@ -195,12 +246,19 @@
 
         <!--        Affichage Opposition / Auberge / Cité / Livre-->
         <q-separator color="indigo-10" spaced></q-separator>
-        <div class="row q-my-md q-gutter-xs">
+        <div class="row q-my-md">
           <q-btn label="Générer une opposition" @click="genererOpposant" color="amber-3" text-color="black"
-                 class="q-mx-md q-mt-md col"/>
-          <q-btn label="Générer une auberge" @click="genererNomAuberge" color="amber-5" class="q-mx-md q-mt-md col"/>
-          <q-btn label="Générer une cité/bourgade" @click="genererBourg" color="amber-7" class="q-mx-md q-mt-md col"/>
-          <q-btn label="Générer un livre" @click="genererLivre" color="amber-9" class="q-mx-md q-mt-md col"/>
+                 :icon="biHeartbreak()"
+                 class="q-mx-md q-mt-md col" glossy/>
+          <q-btn label="Générer une auberge" @click="genererNomAuberge" color="amber-5"
+                 :icon="biCupHot()"
+                 class="q-mx-md q-mt-md col" glossy/>
+          <q-btn label="Générer une cité/bourgade" @click="genererBourg" color="amber-7"
+                 :icon="biHouses()"
+                 class="q-mx-md q-mt-md col" glossy/>
+          <q-btn label="Générer un livre" @click="genererLivre" color="amber-9"
+                 :icon="biBookHalf()"
+                 class="q-mx-md q-mt-md col" glossy/>
         </div>
         <div class="row q-my-md">
           <div v-if="opposant" class="q-mx-md q-mt-md col">
@@ -248,6 +306,12 @@
       </q-page>
     </q-page-container>
 
+    <q-footer>
+      <q-toolbar>
+        <q-toolbar-title class="absolute-center">By DGA, 2024</q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
+
   </q-layout>
 </template>
 
@@ -262,8 +326,27 @@ import oppositions from './assets/opposition.json';
 import calendaire from './assets/calendrier.json';
 import themes from './assets/theme.json';
 import situations from './assets/situations.json';
+import {ref} from "vue";
+import {
+  biBackpack3, biBodyText, biBookHalf, biBugFill, biCalendar3,
+  biCloudSun,
+  biCompass, biCupHot,
+  biFeather, biFeather2, biFileImage, biGeoAlt, biGlobe, biHeartbreak, biHouses,
+  biMenuButton,
+  biPatchQuestion, biPersonVcard,
+  biXCircle
+} from "@quasar/extras/bootstrap-icons";
+// import {useQuasar} from "quasar";
 
 export default {
+  setup() {
+    // const $q = useQuasar();
+
+    return {
+      drawerLeft: ref(true),
+
+    }
+  },
   data() {
     return {
       phrase: '',
@@ -288,7 +371,11 @@ export default {
       date: '',
       theme: '',
       situation: '',
-      relations: ''
+      relations: '',
+      journalEntries: [],
+      enteredGoalValue: '',
+      leftDrawOpen: true,
+      journalContent: ''
     };
   },
   mounted() {
@@ -300,6 +387,63 @@ export default {
 
   },
   methods: {
+    biBugFill() {
+      return biBugFill
+    },
+    biFeather2() {
+      return biFeather2
+    },
+    biBodyText() {
+      return biBodyText
+    },
+    biHouses() {
+      return biHouses
+    },
+    biCupHot() {
+      return biCupHot
+    },
+    biHeartbreak() {
+      return biHeartbreak
+    },
+    biPersonVcard() {
+      return biPersonVcard
+    },
+    biBookHalf() {
+      return biBookHalf
+    },
+    biGlobe() {
+      return biGlobe
+    },
+    biCalendar3() {
+      return biCalendar3
+    },
+    biFileImage() {
+      return biFileImage
+    },
+    biGeoAlt() {
+      return biGeoAlt
+    },
+    biBackpack3() {
+      return biBackpack3
+    },
+    biCloudSun() {
+      return biCloudSun
+    },
+    biCompass() {
+      return biCompass
+    },
+    biPatchQuestion() {
+      return biPatchQuestion
+    },
+    biXCircle() {
+      return biXCircle
+    },
+    biFeather() {
+      return biFeather
+    },
+    biMenuButton() {
+      return biMenuButton
+    },
     // Méthode pour mettre à jour l'horloge en temps réel
     miseAJourHeure() {
       const now = new Date();
@@ -341,6 +485,46 @@ export default {
       this.opposant = '';
       this.date = '';
       this.contexteSituation = '';
+    },
+
+    // Méthodes d'ajout/retrait d'objectfis
+    addEntry() {
+      if (this.enteredGoalValue.trim()) {
+        this.journalEntries.push(this.enteredGoalValue);
+        this.enteredGoalValue = '';
+      }
+    },
+    removeEntry(idx) {
+      this.journalEntries.splice(idx, 1);
+    },
+    exportDiary() {
+      let contenu ='';
+      // Parcourir les entrées du journal (tu peux aussi utiliser `this.$refs` si tu récupères des éléments spécifiques du DOM)
+      this.journalEntries.forEach((entry, index) => {
+        contenu += `${index}. ${entry}\n`; // Ajoute chaque entrée avec un saut de ligne
+      });
+
+      // Générer un horodatage sous la forme YYYY-MM-DD_HH-MM-SS
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0'); // Mois de 0 à 11, donc on ajoute +1
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+
+      // Nom du fichier avec horodatage
+      const fileName = `journal_${year}-${month}-${day}_${hours}-${minutes}-${seconds}.txt`;
+
+      // Créer un fichier blob avec le contenu du journal
+      const blob = new Blob([contenu], {type: 'text/plain'});
+
+      // Créer un lien pour DL le fichier
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName; // Nom du fichier dynamique
+      link.click();
+
     },
 
     // Méthode pour tirer une carte de l'oracle
@@ -425,8 +609,8 @@ export default {
       return this.origineCulturelle;
     },
 
-    // Méthode pour générer une Situation
-    genererPhrase() {
+    // Méthode pour générer globalement un Contexte
+    genererContexte() {
       this.genererTheme();
       this.genererSituation();
       this.genererSujet();
@@ -435,6 +619,7 @@ export default {
       this.genererLieu();
       this.mettreAJourContexte();
     },
+    // Méthode pour mettre à jour l'affichage du bloc Contecte
     mettreAJourContexte() {
       this.contexteSituation = `Thème : ${this.theme}<br>
                                 Situation dramatique: ${this.situation}<br>
@@ -444,7 +629,7 @@ export default {
                                 Lieu: ${this.lieu}`;
     },
 
-    // Méthode pour générer un PNJ
+    // Méthode pour générer globalement un PNJ
     genererPNJ() {
       // Génère chaque sous-composant individuellement
       this.genererConcept();
@@ -470,6 +655,7 @@ export default {
                   Relations : ${this.relations}`;
     },
 
+    // Méthodes liées aux sous-éléments de génération de contexte
     genererTheme() {
       const index = Math.floor(Math.random() * themes.themes.length);
       this.theme = themes.themes[index];
@@ -536,6 +722,7 @@ export default {
       this.mettreAJourContexte();
     },
 
+    // Méthodes liées aux sous-éléments de génération de PNJ
     // Méthode pour générer un niveau de Puissance du PNJ
     genererConcept() {
       const cartesUtilisees = [];
