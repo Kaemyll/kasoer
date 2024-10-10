@@ -1281,6 +1281,27 @@
     "Relation": "anciens amis"
   },
   {
+    "Index": "114",
+    "Omen": "Non mais ...",
+    "Etoiles/5": "4",
+    "10mots": "été, voix, superstition, mouvement, proposition, porte, nation, festivités, philosophie, enquête",
+    "Symbole": "livre ouvert surmonté d'un crâne",
+    "3verbes": "déplacer, enchaîner, mater",
+    "2lieux": "foire, arcade",
+    "Concept": "pâtissier",
+    "Objet": "gobelet",
+    "Meteo": "giboulées",
+    "Sentiment": "désolé",
+    "Disposition": "dédaigneux",
+    "Direction": "nord-est",
+    "4adjectifs": "orné, voisin, considérable, effrayant",
+    "2apparences": "cornes, large d'épaules",
+    "Motivation": "devenir riche",
+    "3traits": "ne parle qu'en chuchotant, maître du déguisement",
+    "Secret": "cleptomane",
+    "Relation": "adversaires"
+  },
+  {
     "Index": "122",
     "Omen": "Non et...",
     "Etoiles/5": "2",
@@ -1344,6 +1365,27 @@
     "Relation": "mère/enfant"
   },
   {
+    "Index": "165",
+    "Omen": "Non mais ...",
+    "Etoiles/5": "4",
+    "10mots": "alexandrin, écharde, albâtre, injure, code, vaisseau, fétiche, propagande, caractéristique, instruction",
+    "Symbole": "champignon noir",
+    "3verbes": "mener, traduire, réaliser",
+    "2lieux": "quai, phare",
+    "Concept": "cordonnier",
+    "Objet": "lotion",
+    "Meteo": "calme",
+    "Sentiment": "déterminé",
+    "Disposition": "intéressé",
+    "Direction": "sud-est",
+    "4adjectifs": "juste, instantané, stratégique, exceptionnel",
+    "2apparences": "se tient bien droit, maquillage",
+    "Motivation": "détruire le monde",
+    "3traits": "amer, déloyal, narcoleptique",
+    "Secret": "a un enfant en secret",
+    "Relation": "adversaires"
+  },
+  {
     "Index": "173",
     "Omen": "Non...",
     "Etoiles/5": "3",
@@ -1384,5 +1426,26 @@
     "3traits": "austère, coeur d'artichaut, sale",
     "Secret": "a tué une connaissance des PJ et a des remords",
     "Relation": "collègues"
+  },
+  {
+    "Index": "185",
+    "Omen": "Non mais ...",
+    "Etoiles/5": "5",
+    "10mots": "dictateur, pollution, cerveau, usure, phosphorescence, tentacule, repas, prestige, canevas, fugue",
+    "Symbole": "oeil aux larmes de sang",
+    "3verbes": "libérer, emprunter, masquer",
+    "2lieux": "source, pigeonnier",
+    "Concept": "diplomate",
+    "Objet": "beurre",
+    "Meteo": "frais",
+    "Sentiment": "sensible",
+    "Disposition": "sympathique",
+    "Direction": "sud",
+    "4adjectifs": "bleu, silencieux, récent, défunt",
+    "2apparences": "mince, muet",
+    "Motivation": "trouver un nouveau travail",
+    "3traits": "touche régulièrement un porte-bonheur, autoritaire, incapable",
+    "Secret": "sait lire les esprits",
+    "Relation": "professionnel/client"
   }
 ]
