@@ -33,7 +33,9 @@
     "miliciens",
     "gardes urbains",
     "gardes ruraux",
-    "flagellants"
+    "flagellants",
+    "chevaliers",
+    "guerriers tribaux"
   ],
   "animaux_dangereux": [
     "loups gris",
@@ -52,7 +54,9 @@
     "panthère",
     "sangliers",
     "sanglier géant",
-    "taureaux"
+    "taureaux",
+    "nuée de rats",
+    "rats géants"
   ],
   "creatures_fantastiques": [
     "zombies (MV)",
@@ -68,7 +72,16 @@
     "Loups-garous (HYB)",
     "harpies",
     "dragons",
-    "araignées géantes"
+    "araignées géantes",
+    "succubes/incubes",
+    "gargouilles",
+    "minotaures",
+    "centaures",
+    "harpies",
+    "noyeurs",
+    "banshees",
+    "satyres",
+    "wyverns/vouivres"
   ],
   "adjectifs": [
     "affamés",

@@ -248,11 +248,6 @@
       </q-page>
     </q-page-container>
 
-    <q-footer reveal elevated class="bg-light-blue-10">
-      <q-toolbar class="justify-center">
-        <q-toolbar-title class="text-h6">Adapté pour Kaetherii</q-toolbar-title>
-      </q-toolbar>
-    </q-footer>
   </q-layout>
 </template>
 
@@ -345,6 +340,7 @@ export default {
       this.titreLivre = '';
       this.opposant = '';
       this.date = '';
+      this.contexteSituation = '';
     },
 
     // Méthode pour tirer une carte de l'oracle
@@ -465,7 +461,7 @@ export default {
     // Méthode pour mettre à jour l'affichage du bloc PNJ
     mettreAJourPNJ() {
       // Combine toutes les parties pour former le PNJ complet
-      this.pnj = `Un(e) ${this.conceptAdjectif}, ${this.originePNJ}, ${this.etoiles}<br>
+      this.pnj = `Un(e) ${this.conceptAdjectif}, ${this.originePNJ}, ${this.etoiles} que le PJ<br>
                   Humeur : ${this.sentimentDisposition} <br>
                   Apparence : ${this.apparence} <br>
                   Motivation : ${this.motivation} <br>
@@ -535,7 +531,6 @@ export default {
       const mot1 = this.tirerElement(carte1["2lieux"]);
       // Tirage 2
       const carte2 = this.tirerCarteDifferente(cartesUtilisees);
-      cartesUtilisees.push(carte2.Index);
       const mot2 = this.tirerElement(carte2["4adjectifs"]);
       this.lieu = `${mot1} ${mot2}`;
       this.mettreAJourContexte();
