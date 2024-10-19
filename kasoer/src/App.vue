@@ -327,13 +327,7 @@ import calendaire from './assets/calendrier.json';
 import themes from './assets/theme.json';
 import situations from './assets/situations.json';
 import {ref} from "vue";
-import {
-  biBackpack3, biBodyText, biBookHalf, biCalendar3,
-  biCloudSun,
-  biCompass, biCupHot,
-  biFileImage, biGeoAlt, biGlobe, biHeartbreak, biHouses,
-  biPatchQuestion, biPersonVcard,
-} from "@quasar/extras/bootstrap-icons";
+
 // import {useQuasar} from "quasar";
 
 export default {
@@ -557,12 +551,12 @@ export default {
     },
     // Méthode pour mettre à jour l'affichage du bloc Contexte
     mettreAJourContexte() {
-      this.contexteSituation = `Thème : ${this.theme}<br>
-                                Situation dramatique: ${this.situation}<br>
-                                Sujet : ${this.sujet}<br>
-                                Action : ${this.action}<br>
-                                Cible : ${this.cible}<br>
-                                Lieu: ${this.lieu}`;
+      this.contexteSituation = `<strong>Thème -></strong> ${this.theme}<br>
+                                <strong>Situation dramatique -></strong> ${this.situation}<br>
+                                <strong>Sujet -></strong> ${this.sujet}<br>
+                                <strong>Action -></strong> ${this.action}<br>
+                                <strong>Cible -></strong> ${this.cible}<br>
+                                <strong>Lieu -></strong> ${this.lieu}`;
     },
 
     // Méthode pour générer globalement un PNJ
@@ -582,13 +576,13 @@ export default {
     // Méthode pour mettre à jour l'affichage du bloc PNJ
     mettreAJourPNJ() {
       // Combine toutes les parties pour former le PNJ complet
-      this.pnj = `Un(e) ${this.conceptAdjectif}, ${this.originePNJ}, ${this.etoiles} que le PJ<br>
-                  Humeur : ${this.sentimentDisposition} <br>
-                  Apparence : ${this.apparence} <br>
-                  Motivation : ${this.motivation} <br>
-                  Traits : ${this.traits} <br>
-                  Secret : ${this.secret} <br>
-                  Relations : ${this.relations}`;
+      this.pnj = `<strong>Concept -></strong> Un(e) ${this.conceptAdjectif}, ${this.originePNJ}, ${this.etoiles} que le PJ<br>
+                  <strong>Humeur -></strong> ${this.sentimentDisposition} <br>
+                  <strong>Apparence -></strong> ${this.apparence} <br>
+                  <strong>Motivation -></strong> ${this.motivation} <br>
+                  <strong>Traits -></strong> ${this.traits} <br>
+                  <strong>Secret -></strong> ${this.secret} <br>
+                  <strong>Relations -></strong> ${this.relations}`;
     },
 
     // Méthodes liées aux sous-éléments de génération de contexte

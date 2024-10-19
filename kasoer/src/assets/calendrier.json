@@ -15,9 +15,6 @@
     "cinquième"
   ],
   "mois": [
-    "X-Domnas (janvier) | +:Le Seigneur -:Le Corbeau",
-    "XI-Judicas (février) | +:Le Juge -:L'Ombre'",
-    "XII-Monacas (mars) | +:Le Moine -:Le Mage",
     "I-Urbas (avril) | +:L'Architecte -:Le Vent",
     "II-Apyllas (mai) | +:Le Chasseur -:La Bête",
     "III-Comas (juin) | +:Le Marchand -:Le Voleur",
@@ -26,6 +23,9 @@
     "VI-Equuas (septembre) | +:Le Chevalier -:Le Dragon",
     "VII-Milas (octobre) | +:Le Guerrier -:Le Barbare",
     "VIII-Hermas (novembre) | +:Le Messager -:Le Labyrinthe",
-    "IX-Deynas (décembre) | +:Le Ménestrel -:Le Chaos"
+    "IX-Deynas (décembre) | +:Le Ménestrel -:Le Chaos",
+    "X-Domnas (janvier) | +:Le Seigneur -:Le Corbeau",
+    "XI-Judicas (février) | +:Le Juge -:L'Ombre'",
+    "XII-Monacas (mars) | +:Le Moine -:Le Mage"
   ]
 }
